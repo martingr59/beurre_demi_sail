@@ -62,6 +62,13 @@ nav a:hover{color:var(--jaune)}
 .cce{background:var(--jaune);color:var(--marine)}
 .cce h2{font-size:clamp(2.2rem,6vw,4rem)}
 .cce p{max-width:40rem;font-size:1.15rem}
+.cce .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,240px);align-items:center;column-gap:2.5rem}
+.cce .petit,.cce h2,.cce #cceTextes{grid-column:1}
+.cce-logo-wrap{grid-column:2;grid-row:1 / span 3;justify-self:center;text-align:center;width:100%;max-width:240px}
+.cce-logo{display:block;width:100%;max-height:230px;object-fit:contain}
+.cce-logo-credit{display:block;margin-top:.5rem;font-size:.72rem;line-height:1.3;color:#24344a}
+.cce-logo-credit a{color:#24344a;text-decoration:underline}
+@media(max-width:700px){.cce .wrap{grid-template-columns:1fr;gap:.8rem}.cce .petit,.cce h2,.cce #cceTextes,.cce-logo-wrap{grid-column:1;grid-row:auto}.cce-logo-wrap{width:150px;max-width:55%;margin:.8rem auto 0}.cce-logo{max-height:150px}}
 .cce .petit{font-weight:700;margin-bottom:.8rem}
 
 .liste{list-style:none;padding:0}
@@ -161,6 +168,10 @@ footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
     <p class="petit" id="cceSurtitre"></p>
     <h2 id="cceTitre"></h2>
     <div id="cceTextes"></div>
+    <div class="cce-logo-wrap">
+      <img class="cce-logo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Course_Croisi%C3%A8re_EDHEC_noir.png" alt="Logo Course Croisière EDHEC">
+      <small class="cce-logo-credit">Logo : Course Croisière EDHEC · <a href="https://commons.wikimedia.org/wiki/File:Logo_Course_Croisi%C3%A8re_EDHEC_noir.png" target="_blank" rel="noopener">CC BY-SA 4.0</a></small>
+    </div>
   </div></section>
 
   <section id="activites"><div class="wrap">
