@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BeurreDemiSail – Association de voile de CentraleSupélec Rennes</title>
+<meta name="description" content="BeurreDemiSail, l'association de voile de CentraleSupélec campus de Rennes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --marine:#0A1B33; --marine-2:#12294A; --jaune:#FFC72C; --blanc:#F6F8FB; --gris:#B8C4D6;
+  --titre:'Bricolage Grotesque','Trebuchet MS',Arial,sans-serif;
+  --texte:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--texte);background:var(--marine);color:var(--blanc);line-height:1.65;font-size:1.05rem}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--jaune);outline-offset:3px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 1.4rem}
+h1,h2,h3{font-family:var(--titre);line-height:1.1}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-bottom:1.2rem}
+section{padding:4.5rem 0}
+
+header{position:sticky;top:0;z-index:5;background:rgba(10,27,51,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--marine-2)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.8rem;padding-bottom:.8rem;flex-wrap:wrap}
+.logo{font-family:var(--titre);font-weight:800;font-size:1.2rem;text-decoration:none}
+.logo span{color:var(--jaune)}
+nav{display:flex;gap:1.3rem;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--gris);font-size:.95rem}
+nav a:hover{color:var(--jaune)}
+
+.hero{position:relative;overflow:hidden;padding:6rem 0 7rem;background:var(--marine) center/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--marine) 35%,rgba(10,27,51,.55))}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(2.8rem,10vw,6.5rem);font-weight:800;letter-spacing:-.03em}
+.hero h1 span{color:var(--jaune)}
+.hero p{max-width:34rem;margin:1.2rem 0 2rem;font-size:1.2rem;color:var(--gris)}
+.voile{position:absolute;right:6%;bottom:0;width:min(30vw,260px);aspect-ratio:3/4;background:var(--jaune);clip-path:polygon(50% 0,100% 100%,0 100%);opacity:.95}
+.bouton{display:inline-block;background:var(--jaune);color:var(--marine);font-weight:700;padding:.85rem 1.6rem;border-radius:999px;text-decoration:none}
+.bouton:hover{background:#fff}
+
+.asso p{max-width:42rem;color:var(--gris)}
+
+.cce{background:var(--jaune);color:var(--marine)}
+.cce h2{font-size:clamp(2.2rem,6vw,4rem)}
+.cce p{max-width:40rem;font-size:1.15rem}
+.cce .petit{font-weight:700;margin-bottom:.8rem}
+
+.liste{list-style:none;padding:0}
+.liste li{display:grid;grid-template-columns:minmax(0,1fr);gap:.3rem;padding:1.5rem 0;border-top:1px solid var(--marine-2)}
+.liste li:last-child{border-bottom:1px solid var(--marine-2)}
+.liste h3{font-size:1.5rem;color:var(--jaune)}
+.liste p{color:var(--gris);max-width:40rem}
+@media(min-width:760px){.liste li{grid-template-columns:260px 1fr;gap:2rem}}
+
+.galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem}
+.galerie img,.galerie .vide{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;display:block;background:var(--marine-2)}
+.galerie .vide{display:grid;place-items:center;color:var(--gris);font-size:.9rem;text-align:center;padding:1rem}
+
+.contact{background:var(--marine-2)}
+.encart{border:2px solid var(--jaune);border-radius:10px;padding:1.8rem;max-width:34rem}
+.encart dl{display:grid;grid-template-columns:auto 1fr;gap:.6rem 1.4rem}
+.encart dt{color:var(--gris)}
+.encart dd{font-weight:600;word-break:break-word}
+.encart a{color:var(--jaune)}
+
+footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#haut" id="logo"></a>
+    <nav>
+      <a href="#asso">L'association</a>
+      <a href="#cce">CCE</a>
+      <a href="#activites">Activités</a>
+      <a href="#photos">Photos</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="haut">
+  <div class="hero" id="hero">
+    <div class="wrap">
+      <h1 id="titre"></h1>
+      <p id="slogan"></p>
+      <a class="bouton" href="#contact" id="boutonHero"></a>
+    </div>
+    <div class="voile" aria-hidden="true"></div>
+  </div>
+
+  <section class="asso" id="asso"><div class="wrap">
+    <h2 id="assoTitre"></h2>
+    <div id="assoTextes"></div>
+  </div></section>
+
+  <section class="cce" id="cce"><div class="wrap">
+    <p class="petit" id="cceSurtitre"></p>
+    <h2 id="cceTitre"></h2>
+    <div id="cceTextes"></div>
+  </div></section>
+
+  <section id="activites"><div class="wrap">
+    <h2 id="actTitre"></h2>
+    <ul class="liste" id="actListe"></ul>
+  </div></section>
+
+  <section id="photos"><div class="wrap">
+    <h2 id="photoTitre"></h2>
+    <div class="galerie" id="galerie"></div>
+  </div></section>
+
+  <section class="contact" id="contact"><div class="wrap">
+    <h2 id="contactTitre"></h2>
+    <div class="encart"><dl id="contactListe"></dl></div>
+  </div></section>
+</main>
+
+<footer><div class="wrap" id="pied"></div></footer>
+
+<script>
+/* ==========================================================
+   TEXTES DU SITE : c'est ICI que tu modifies tout.
+   Change seulement ce qui est entre guillemets "..." puis
+   enregistre le fichier. Ne supprime pas les guillemets,
+   ni les virgules à la fin des lignes.
+   ========================================================== */
+const SITE = {
+  nom: "BeurreDemiSail",
+  slogan: "L'association de voile de CentraleSupélec, campus de Rennes.",
+  boutonAccueil: "Nous contacter",
+
+  // Photo de fond de l'accueil (mets le fichier dans le dossier "photos"). Laisse "" pour aucune.
+  photoAccueil: "photos/spinnaker.jpg",
+
+  asso: {
+    titre: "L'association",
+    textes: [
+      "BeurreDemiSail réunit les étudiants de CentraleSupélec à Rennes qui aiment la voile, débutants comme confirmés.",
+      "On navigue ensemble, on s'entraîne, et on représente le campus en régate. Pas besoin d'expérience pour nous rejoindre."
+    ]
+  },
+
+  cce: {
+    surtitre: "Notre grand objectif",
+    titre: "Participer à la CCE",
+    textes: [
+      "Nous voulons prendre le départ de la Course Croisière EDHEC (CCE), l'une des plus grandes courses à la voile étudiantes d'Europe.",
+      "Week-ends de navigation et régates servent à préparer l'équipage."
+    ]
+  },
+
+  activites: {
+    titre: "Nos activités",
+    liste: [
+      { titre: "Week-ends de navigation", texte: "Des sorties en mer pour apprendre, progresser et naviguer entre amis." },
+      { titre: "Régates", texte: "Des courses contre d'autres écoles pour se mesurer et préparer la CCE." },
+      { titre: "Amphis de sensibilisation", texte: "Des conférences sur la biodiversité marine, pour mieux connaître la mer sur laquelle nous naviguons." }
+    ]
+  },
+
+  // Photos : ajoute les fichiers dans le dossier "photos", puis écris leur nom ici.
+  // Exemple : "photos/regate1.jpg"
+  photos: {
+    titre: "Photos",
+    liste: [
+      "photos/equipage.jpg",
+      "photos/sortie-en-mer.jpg",
+      "photos/port-de-nuit.jpg",
+    ]
+  },
+
+  contact: {
+    titre: "Nous contacter",
+    email: "beurre.demisail.cs.rennes@gmail.com",        // ex : "beurredemisail@gmail.com"
+    instagram: "",    // ex : "beurredemisail"  (sans le @)
+    telephone: "06 31 93 66 23",    // ex : "06 12 34 56 78"
+    contactTelephoneNom: "Martin Gressier"  // nom affiché à côté du numéro, ou ""
+  },
+
+  pied: "© 2026 BeurreDemiSail – CentraleSupélec, campus de Rennes"
+};
+/* ==================== FIN DES TEXTES ==================== */
+
+const $ = id => document.getElementById(id);
+const paragraphes = (el, tab) => tab.forEach(t => { const p = document.createElement('p'); p.textContent = t; p.style.marginBottom = '1rem'; el.appendChild(p); });
+
+document.title = SITE.nom + " – Association de voile de CentraleSupélec Rennes";
+const sep = SITE.nom.search(/Sail/);
+const nomHTML = sep > 0 ? SITE.nom.slice(0, sep) + '<span>' + SITE.nom.slice(sep) + '</span>' : SITE.nom;
+$('logo').innerHTML = nomHTML;
+$('titre').innerHTML = nomHTML;
+$('slogan').textContent = SITE.slogan;
+$('boutonHero').textContent = SITE.boutonAccueil;
+if (SITE.photoAccueil) $('hero').style.backgroundImage = "url('" + SITE.photoAccueil + "')";
+
+$('assoTitre').textContent = SITE.asso.titre;
+paragraphes($('assoTextes'), SITE.asso.textes);
+
+$('cceSurtitre').textContent = SITE.cce.surtitre;
+$('cceTitre').textContent = SITE.cce.titre;
+paragraphes($('cceTextes'), SITE.cce.textes);
+
+$('actTitre').textContent = SITE.activites.titre;
+SITE.activites.liste.forEach(a => {
+  const li = document.createElement('li');
+  const h = document.createElement('h3'); h.textContent = a.titre;
+  const p = document.createElement('p'); p.textContent = a.texte;
+  li.append(h, p); $('actListe').appendChild(li);
+});
+
+$('photoTitre').textContent = SITE.photos.titre;
+if (SITE.photos.liste.length) {
+  SITE.photos.liste.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src; img.alt = "Photo de l'association BeurreDemiSail"; img.loading = 'lazy';
+    $('galerie').appendChild(img);
+  });
+} else {
+  for (let i = 0; i < 3; i++) {
+    const d = document.createElement('div'); d.className = 'vide';
+    d.textContent = 'Les photos arrivent bientôt'; $('galerie').appendChild(d);
+  }
+}
+
+$('contactTitre').textContent = SITE.contact.titre;
+const ligne = (nom, valeur, lien) => {
+  const dt = document.createElement('dt'); dt.textContent = nom;
+  const dd = document.createElement('dd');
+  if (valeur && lien) { const a = document.createElement('a'); a.href = lien; a.textContent = valeur; dd.appendChild(a); }
+  else dd.textContent = valeur || 'à venir';
+  $('contactListe').append(dt, dd);
+};
+const c = SITE.contact;
+ligne('E-mail', c.email, c.email && 'mailto:' + c.email);
+ligne('Instagram', c.instagram && '@' + c.instagram, c.instagram && 'https://www.instagram.com/' + c.instagram);
+ligne('Téléphone' + (c.contactTelephoneNom && c.telephone ? ' (' + c.contactTelephoneNom + ')' : ''), c.telephone, c.telephone && 'tel:' + c.telephone.replace(/\s/g, ''));
+
+$('pied').textContent = SITE.pied;
+</script>
+</body>
+</html>
