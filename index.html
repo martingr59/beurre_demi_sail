@@ -78,6 +78,24 @@ nav a:hover{color:var(--jaune)}
 .encart a{color:var(--jaune)}
 
 footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
+
+/* Apparitions progressives au défilement */
+.reveal{
+  opacity:0;
+  transform:translate3d(0,34px,0);
+  transition:opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--reveal-delay,0ms);
+  will-change:opacity,transform;
+}
+.reveal.reveal--left{transform:translate3d(-48px,0,0)}
+.reveal.reveal--right{transform:translate3d(48px,0,0)}
+.reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal.reveal--left,.reveal.reveal--right{
+    opacity:1;transform:none;transition:none;will-change:auto
+  }
+}
+
 </style>
 </head>
 <body>
@@ -254,6 +272,44 @@ ligne('Instagram', c.instagram && '@' + c.instagram, c.instagram && 'https://www
 ligne('Téléphone' + (c.contactTelephoneNom && c.telephone ? ' (' + c.contactTelephoneNom + ')' : ''), c.telephone, c.telephone && 'tel:' + c.telephone.replace(/\s/g, ''));
 
 $('pied').textContent = SITE.pied;
+
+
+// Apparitions au scroll : les titres arrivent du haut, les contenus des côtés.
+const revealGroups = [
+  ['.asso h2', 'up'],
+  ['.asso p', 'left'],
+  ['.cce .petit, .cce h2', 'up'],
+  ['.cce p', 'right'],
+  ['#activites h2', 'up'],
+  ['#actListe li', 'left'],
+  ['#photos h2', 'up'],
+  ['#galerie img, #galerie .vide', 'right'],
+  ['#contact h2', 'up'],
+  ['.encart', 'up']
+];
+revealGroups.forEach(([selector, direction]) => {
+  document.querySelectorAll(selector).forEach((element, index) => {
+    element.classList.add('reveal');
+    if (direction === 'left') element.classList.add('reveal--left');
+    if (direction === 'right') element.classList.add('reveal--right');
+    element.style.setProperty('--reveal-delay', Math.min(index * 90, 360) + 'ms');
+  });
+});
+
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+} else {
+  document.querySelectorAll('.reveal').forEach(element => element.classList.add('is-visible'));
+}
+
 </script>
 </body>
 </html>
