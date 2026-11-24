@@ -25,6 +25,18 @@ h1,h2,h3{font-family:var(--titre);line-height:1.1}
 h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-bottom:1.2rem}
 section{padding:4.5rem 0}
 
+/* Galerie verticale fixe à gauche */
+.gallery-rail{position:fixed;z-index:4;left:0;top:86px;bottom:0;width:220px;padding:12px;overflow-y:auto;overscroll-behavior:contain;background:rgba(7,19,36,.96);border-right:1px solid var(--marine-2);scrollbar-width:thin;scrollbar-color:var(--jaune) var(--marine-2)}
+.gallery-rail img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:8px;margin:0 0 12px;background:var(--marine-2)}
+header .wrap{margin-left:220px}
+main,footer{margin-left:220px}
+@media(max-width:760px){
+ .gallery-rail{position:relative;top:auto;bottom:auto;width:100%;height:170px;display:flex;gap:10px;padding:10px;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--marine-2)}
+ .gallery-rail img{height:145px;width:105px;min-width:105px;aspect-ratio:auto;margin:0}
+ header .wrap{margin-left:auto}
+ main,footer{margin-left:0}
+}
+
 header{position:sticky;top:0;z-index:5;background:rgba(10,27,51,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--marine-2)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;padding-top:.55rem;padding-bottom:.55rem;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:.75rem;flex:0 0 auto;font-family:var(--titre);font-weight:800;font-size:1.2rem;text-decoration:none;min-height:66px}
@@ -210,6 +222,10 @@ const SITE = {
       "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/equipage.jpg",
       "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/sortie-en-mer.jpg",
       "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/port-de-nuit.jpg",
+      "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/gallery-1.webp",
+      "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/gallery-2.webp",
+      "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/gallery-3.webp",
+      "https://raw.githubusercontent.com/martingr59/beurre_demi_sail/main/gallery-4.webp",
     ]
   },
 
@@ -267,6 +283,8 @@ if (SITE.photos.liste.length) {
     img.src = src; img.alt = "Photo de l'association BeurreDemiSail"; img.loading = 'lazy';
     img.onerror = () => { img.onerror = null; img.style.display = 'none'; };
     $('galerie').appendChild(img);
+    const sideImg = img.cloneNode(); sideImg.loading = 'lazy';
+    $('galleryRail').appendChild(sideImg);
   });
 } else {
   for (let i = 0; i < 3; i++) {
