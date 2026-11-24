@@ -96,6 +96,14 @@ footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
   }
 }
 
+
+/* Galerie verticale latérale */
+.side-gallery{position:fixed;left:0;top:0;bottom:0;width:178px;padding:12px;overflow-y:auto;overscroll-behavior:contain;background:#071426;border-right:1px solid var(--marine-2);z-index:8;display:flex;flex-direction:column;gap:12px}
+.side-gallery img{width:100%;height:clamp(180px,34vh,360px);object-fit:cover;border-radius:8px;display:block}
+.side-gallery .side-gallery-title{font-family:var(--titre);font-weight:800;color:var(--jaune);font-size:1rem;padding:6px 2px}
+body{margin-left:178px}
+@media(max-width:760px){.side-gallery{display:none}body{margin-left:0}}
+
 </style>
 </head>
 <body>
@@ -112,6 +120,7 @@ footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
     </nav>
   </div>
 </header>
+<aside class="side-gallery" id="sideGallery" aria-label="Galerie photos défilante"><div class="side-gallery-title">En images</div></aside>
 
 <main id="haut">
   <div class="hero" id="hero">
@@ -244,6 +253,14 @@ SITE.activites.liste.forEach(a => {
 });
 
 $('photoTitre').textContent = SITE.photos.titre;
+const sideGallery = $('sideGallery');
+SITE.photos.liste.forEach((src, index) => {
+  const sideImg = document.createElement('img');
+  sideImg.src = src;
+  sideImg.alt = "Photo " + (index + 1) + " de BeurreDemiSail";
+  sideImg.loading = 'lazy';
+  sideGallery.appendChild(sideImg);
+});
 if (SITE.photos.liste.length) {
   SITE.photos.liste.forEach(src => {
     const img = document.createElement('img');
