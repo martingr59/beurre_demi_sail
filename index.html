@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BeurreDemiSail – Association de voile de CentraleSupélec Rennes</title>
 <meta name="description" content="BeurreDemiSail, l'association de voile de CentraleSupélec campus de Rennes.">
-<link rel="icon" href="photos/logo.png">
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
@@ -102,7 +102,7 @@ footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
       <p id="slogan"></p>
       <a class="bouton" href="#contact" id="boutonHero"></a>
     </div>
-    <img class="hero-logo" src="photos/logo.png" alt="Logo BeurreDemiSail">
+    <img class="hero-logo" src="logo.png" alt="Logo BeurreDemiSail">
   </div>
 
   <section class="asso" id="asso"><div class="wrap">
@@ -147,7 +147,7 @@ const SITE = {
   boutonAccueil: "Nous contacter",
 
   // Photo de fond de l'accueil (mets le fichier dans le dossier "photos"). Laisse "" pour aucune.
-  photoAccueil: "photos/spinnaker.jpg",
+  photoAccueil: "spinnaker.jpg",
 
   asso: {
     titre: "L'association",
@@ -180,9 +180,9 @@ const SITE = {
   photos: {
     titre: "Photos",
     liste: [
-      "photos/equipage.jpg",
-      "photos/sortie-en-mer.jpg",
-      "photos/port-de-nuit.jpg",
+      "equipage.jpg",
+      "sortie-en-mer.jpg",
+      "port-de-nuit.jpg",
     ]
   },
 
@@ -204,7 +204,7 @@ const paragraphes = (el, tab) => tab.forEach(t => { const p = document.createEle
 document.title = SITE.nom + " – Association de voile de CentraleSupélec Rennes";
 const sep = SITE.nom.search(/Sail/);
 const nomHTML = sep > 0 ? SITE.nom.slice(0, sep) + '<span>' + SITE.nom.slice(sep) + '</span>' : SITE.nom;
-$('logo').innerHTML = '<img class="logo-mark" src="photos/logo.png" alt="Logo BeurreDemiSail">' + '<span class="logo-name">' + nomHTML + '</span>';
+$('logo').innerHTML = '<img class="logo-mark" src="logo.png" alt="Logo BeurreDemiSail">' + '<span class="logo-name">' + nomHTML + '</span>';
 $('titre').innerHTML = nomHTML;
 $('slogan').textContent = SITE.slogan;
 $('boutonHero').textContent = SITE.boutonAccueil;
