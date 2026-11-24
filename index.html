@@ -26,10 +26,18 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-bottom:1.2rem}
 section{padding:4.5rem 0}
 
 header{position:sticky;top:0;z-index:5;background:rgba(10,27,51,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--marine-2)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.8rem;padding-bottom:.8rem;flex-wrap:wrap}
-.logo{font-family:var(--titre);font-weight:800;font-size:1.2rem;text-decoration:none}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;padding-top:.55rem;padding-bottom:.55rem;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:.75rem;flex:0 0 auto;font-family:var(--titre);font-weight:800;font-size:1.2rem;text-decoration:none;min-height:66px}
+.logo-mark{display:block;height:clamp(54px,6vw,72px);width:auto;max-width:190px;object-fit:contain;flex:0 0 auto}
 .logo span{color:var(--jaune)}
-nav{display:flex;gap:1.3rem;flex-wrap:wrap}
+nav{display:flex;align-items:center;gap:1.3rem;flex-wrap:wrap}
+@media(max-width:700px){
+  header .wrap{justify-content:center;gap:.35rem;padding-top:.45rem;padding-bottom:.65rem}
+  .logo{min-height:58px}
+  .logo-mark{height:58px;max-width:160px}
+  nav{justify-content:center;gap:.55rem 1rem}
+  nav a{font-size:.88rem}
+}
 nav a{text-decoration:none;color:var(--gris);font-size:.95rem}
 nav a:hover{color:var(--jaune)}
 
@@ -196,7 +204,7 @@ const paragraphes = (el, tab) => tab.forEach(t => { const p = document.createEle
 document.title = SITE.nom + " – Association de voile de CentraleSupélec Rennes";
 const sep = SITE.nom.search(/Sail/);
 const nomHTML = sep > 0 ? SITE.nom.slice(0, sep) + '<span>' + SITE.nom.slice(sep) + '</span>' : SITE.nom;
-$('logo').innerHTML = '<img src="photos/logo.png" alt="" style="height:40px;width:auto;vertical-align:middle;margin-right:.6rem">' + nomHTML;
+$('logo').innerHTML = '<img class="logo-mark" src="photos/logo.png" alt="Logo BeurreDemiSail">' + '<span class="logo-name">' + nomHTML + '</span>';
 $('titre').innerHTML = nomHTML;
 $('slogan').textContent = SITE.slogan;
 $('boutonHero').textContent = SITE.boutonAccueil;
