@@ -25,18 +25,11 @@ h1,h2,h3{font-family:var(--titre);line-height:1.1}
 h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-bottom:1.2rem}
 section{padding:4.5rem 0}
 
-/* Galerie verticale fixe à gauche */
-.gallery-rail{position:fixed;z-index:4;left:0;top:86px;bottom:0;width:220px;padding:12px;overflow-y:auto;overscroll-behavior:contain;background:rgba(7,19,36,.96);border-right:1px solid var(--marine-2);scrollbar-width:thin;scrollbar-color:var(--jaune) var(--marine-2)}
-.gallery-rail img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:8px;margin:0 0 12px;background:var(--marine-2)}
-header .wrap{margin-left:220px}
-main,footer{margin-left:220px}
-@media(max-width:760px){
- .gallery-rail{position:relative;top:auto;bottom:auto;width:100%;height:170px;display:flex;gap:10px;padding:10px;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--marine-2)}
- .gallery-rail img{height:145px;width:105px;min-width:105px;aspect-ratio:auto;margin:0}
- header .wrap{margin-left:auto}
- main,footer{margin-left:0}
-}
-
+/* Mise en page galerie + contenu sans gouttière */
+body{margin-left:178px}
+header .wrap{margin:0 auto}
+main,footer{margin-left:0}
+@media(max-width:760px){body{margin-left:0}}
 header{position:sticky;top:0;z-index:5;background:rgba(10,27,51,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--marine-2)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;padding-top:.55rem;padding-bottom:.55rem;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:.75rem;flex:0 0 auto;font-family:var(--titre);font-weight:800;font-size:1.2rem;text-decoration:none;min-height:66px}
@@ -109,13 +102,28 @@ footer{padding:2rem 0;color:var(--gris);font-size:.9rem;text-align:center}
 }
 
 
-/* Galerie verticale latérale */
-.side-gallery{position:fixed;left:0;top:0;bottom:0;width:178px;padding:12px;overflow-y:auto;overscroll-behavior:contain;background:#071426;border-right:1px solid var(--marine-2);z-index:8;display:flex;flex-direction:column;gap:12px}
-.side-gallery img{width:100%;height:clamp(180px,34vh,360px);object-fit:cover;border-radius:8px;display:block}
-.side-gallery .side-gallery-title{font-family:var(--titre);font-weight:800;color:var(--jaune);font-size:1rem;padding:6px 2px}
-body{margin-left:178px}
-@media(max-width:760px){.side-gallery{display:none}body{margin-left:0}}
-
+/* Galerie latérale défilante en boucle */
+.side-gallery{position:fixed;left:0;top:0;bottom:0;width:178px;padding:12px 10px;background:#071426;border-right:1px solid var(--marine-2);z-index:8;overflow:hidden}
+.side-gallery-title{font-family:var(--titre);font-weight:800;color:var(--jaune);font-size:1rem;padding:6px 2px 12px}
+.side-gallery-track{display:flex;flex-direction:column;gap:12px;animation:gallery-loop 48s linear infinite}
+.side-gallery-track img{width:100%;height:clamp(170px,30vh,290px);object-fit:cover;border-radius:8px;display:block;flex:none}
+.side-gallery:hover .side-gallery-track{animation-play-state:paused}
+@keyframes gallery-loop{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media(prefers-reduced-motion:reduce){.side-gallery-track{animation:none}}
+@media(max-width:760px){.side-gallery{position:relative;width:100%;height:168px;padding:8px 12px;display:flex;gap:12px;overflow:hidden;border-right:0;border-bottom:1px solid var(--marine-2)}
+.side-gallery-title{flex:0 0 76px;align-self:center;padding:0}
+.side-gallery-track{flex-direction:row;gap:10px;animation:gallery-loop-horizontal 55s linear infinite}
+.side-gallery-track img{width:105px;height:145px}
+@keyframes gallery-loop-horizontal{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+}
+.contact{background:#17375e}
+.contact h2{color:#fff}
+.encart{background:#0a1b33;max-width:100%;box-shadow:0 10px 30px rgba(0,0,0,.22)}
+.encart dl{grid-template-columns:minmax(85px,auto) minmax(0,1fr)}
+.encart dt{color:#dce6f5;font-weight:700}
+.encart dd{font-size:1.08rem}
+.encart a{display:inline-block;color:#ffd84d;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+#contact{scroll-margin-top:110px}
 </style>
 </head>
 <body>
@@ -132,7 +140,7 @@ body{margin-left:178px}
     </nav>
   </div>
 </header>
-<aside class="side-gallery" id="sideGallery" aria-label="Galerie photos défilante"><div class="side-gallery-title">En images</div></aside>
+<aside class="side-gallery" id="sideGallery" aria-label="Galerie photos défilante"><div class="side-gallery-title">En images</div><div class="side-gallery-track" id="sideGalleryTrack"></div></aside>
 
 <main id="haut">
   <div class="hero" id="hero">
@@ -269,22 +277,24 @@ SITE.activites.liste.forEach(a => {
 });
 
 $('photoTitre').textContent = SITE.photos.titre;
-const sideGallery = $('sideGallery');
-SITE.photos.liste.forEach((src, index) => {
-  const sideImg = document.createElement('img');
-  sideImg.src = src;
-  sideImg.alt = "Photo " + (index + 1) + " de BeurreDemiSail";
-  sideImg.loading = 'lazy';
-  sideGallery.appendChild(sideImg);
-});
+const sideGalleryTrack = $('sideGalleryTrack');
+const addSidePhoto = (src, index) => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = "Photo " + (index + 1) + " de BeurreDemiSail";
+  img.loading = index < 4 ? 'eager' : 'lazy';
+  img.onerror = () => { img.onerror = null; img.style.display = 'none'; };
+  sideGalleryTrack.appendChild(img);
+};
+SITE.photos.liste.forEach(addSidePhoto);
+// Duplique la série pour un défilement continu sans saut visible.
+SITE.photos.liste.forEach((src, index) => addSidePhoto(src, index));
 if (SITE.photos.liste.length) {
   SITE.photos.liste.forEach(src => {
     const img = document.createElement('img');
     img.src = src; img.alt = "Photo de l'association BeurreDemiSail"; img.loading = 'lazy';
     img.onerror = () => { img.onerror = null; img.style.display = 'none'; };
     $('galerie').appendChild(img);
-    const sideImg = img.cloneNode(); sideImg.loading = 'lazy';
-    $('galleryRail').appendChild(sideImg);
   });
 } else {
   for (let i = 0; i < 3; i++) {
